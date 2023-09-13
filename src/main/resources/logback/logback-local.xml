@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_PATH" value="/${user.home}/dev/logs/kookie-pic"/>
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="BASIC_ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/app.log</file>
+        <encoder>
+            <charset>utf8</charset>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/gip-be.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>20MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="ERROR_ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/error.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/gip-be-error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>20MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="org.springframework">
+        <level value="DEBUG" />
+    </logger>
+    <logger name="org.springframework.bean">
+        <level value="DEBUG" />
+    </logger>
+    <logger name="org.springframework.data">
+        <level value="ERROR" />
+    </logger>
+    <logger name="org.springframework.session">
+        <level value="ERROR" />
+    </logger>
+
+    <logger name="org.hibernate.type" level="TRACE" />
+    <logger name="com.zaxxer.hikari" level="TRACE" />
+    <logger name="com.zaxxer.hikari.pool.HikariPool" level="DEBUG"/>
+    <logger name="com.zaxxer.hikari.HikariConfig" level="OFF"/>
+    <logger name="org.apache.http.wire" level="OFF" />
+    <logger name="jdbc.splonly" level="OFF" />
+    <logger name="jdbc.audit" level="OFF" />
+    <logger name="jdbc.resultset" level="OFF" />
+    <logger name="jdbc.connection" level="OFF"/>
+    <logger name="jdbc.resultsettable" level="OFF" />
+    <logger name="jdbc.sqltiming" level="OFF" />
+
+    <logger name="org.hibernate.engine.internal.TwoPhaseLoad" level="OFF" />
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="OFF" />
+    <logger name="org.hibernate.hql.internal.ast.util.JoinProcessor" level="OFF" />
+    <logger name="org.hibernate.hql.internal.ast.QueryTranslatorImpl" level="OFF" />
+    <logger name="org.hibernate.loader.Loader" level="OFF" />
+    <logger name="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" level="OFF" />
+
+    <logger name="org.thymeleaf.TemplateEngine" level="OFF" />
+    <logger name="com.zaxxer.hikari.pool.HikariPool" level="ERROR" />
+    <logger name="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" level="OFF" />
+
+    <!-- rollback 이슈로 인한 debug 용-->
+    <logger name="org.springframework.orm.jpa">
+        <level value="INFO" />
+    </logger>
+    <logger name="org.springframework.transaction">
+        <level value="INFO" />
+    </logger>
+    <logger name="org.springframework.transaction.interceptor">
+        <level value="INFO" />
+    </logger>
+
+    <!-- Root Logger -->
+    <root level="DEBUG">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

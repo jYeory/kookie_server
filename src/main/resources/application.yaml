@@ -1,0 +1,64 @@
+server:
+  port: 15555
+  servlet:
+    context-path: "/"
+    encoding:
+      charset: UTF-8
+      force-response: true
+    tomcat:
+      connection-timeout: 1800000
+      keep-alive-timeout: 900000
+logging:
+  config: classpath:logback/logback-local.xml
+salt:
+  key: ${user.home}/dev/keys/kookie-salt.key
+spring:
+  config:
+    activate:
+      on-profile: default
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    dispatch-options-request: true
+  security:
+    jwt:
+      expire: 3600
+      signkey: jOalPisVTiMoHbAy33yUvVkuis
+  jpa:
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        connection:
+          handling_mode: DELAYED_ACQUISITION_AND_RELEASE_AFTER_TRANSACTION
+          provider_disables_autocommit: true
+        default_batch_fetch_size: 100
+        show_sql: true
+        format_sql: true
+        generate_statistics: true
+        jdbc:
+          batch_size: 10000
+        order_inserts: true
+        order_updates: true
+    generate-ddl: false
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:33306/kookie
+    username: kookie_app
+    password: kooKie_123
+    hikari:
+      leakDetectionThreshold: 0
+      maximum-pool-size: 30
+      connection-timeout: 300000
+      max-lifetime: 1800000
+      idle-timeout: 600000
+      minimum-idle: 5
